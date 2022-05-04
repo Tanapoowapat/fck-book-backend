@@ -46,4 +46,4 @@ api.add_resource(Product, "/product")
 
 if __name__ == "__main__":
     # TODO: Add swagger integration
-    app.run(debug=True, port=5000)  # important to mention debug=True
+    app.run(debug=True)  # important to mention debug=True
