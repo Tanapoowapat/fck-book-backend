@@ -16,7 +16,8 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = postgresqlConfig
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # Setup the Flask-JWT-Extended extension
-app.config["JWT_SECRET_KEY"] = "Dese.Decent.Pups.BOOYO0OST"  # Change this!
+# Change this!
+app.config["JWT_SECRET_KEY"] = "192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcbf"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 jwt = JWTManager(app)
@@ -45,4 +46,4 @@ api.add_resource(Product, "/product")
 
 if __name__ == "__main__":
     # TODO: Add swagger integration
-    app.run(debug=True)  # important to mention debug=True
+    app.run(debug=True, port=5000)  # important to mention debug=True
