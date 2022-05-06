@@ -18,9 +18,9 @@ class PostModel(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
     update_time = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, title, owner_post, message="", image="", like=0):
+    def __init__(self, owner_post, message="", image="", like=0):
         self.id = uuid.uuid4()
-        self.title = title
+        self.title = ""
         self.image = image
         self.message = message
         self.owner_post = owner_post
