@@ -43,8 +43,8 @@ class Post(Resource):
         owner_post = data["owner_post"]
         message = data["message"]
         image = data["image"]
-        image_name = "app/image/" + str(uuid4()) + ".png"
-        image.save(image_name)
+        image_name = str(uuid4()) + ".png"
+        image.save("app/image/" + image_name)
 
         post = PostModel(title, owner_post, message, image_name)
         try:
