@@ -31,7 +31,7 @@ class User(Resource):
         user = UserModel.query.filter_by(username=username).one_or_none()
         if not user or not user.check_password(password):
             return {"message": "Wrong username or password."}, 401
-        access_token = create_access_token(identity=json.dumps({"id": str(user.id), "username": user.username, "display_name": user.display_name, "display_image": user.display_image}))
+        access_token = create_access_token(identity=json.dumps({"id": str(user.id), "username": user.username, "display_name": user.display_name}))
         return jsonify(access_token=access_token)
 
     @jwt_required()  # Requires bearer token
