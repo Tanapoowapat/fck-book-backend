@@ -4,6 +4,7 @@ from app.models.post import PostModel
 from app.models.user import UserModel
 from flask_jwt_extended import jwt_required
 from app.util.logz import create_logger
+from sqlalchemy import or_
 
 
 class Post(Resource):
@@ -95,8 +96,6 @@ class PostList(Resource):
         for post in posts:
             user = UserModel.find_by_id(str(post.owner_post))
             post.owner_post = user.json()
-
-        print({"posts": [post.json() for post in posts]})
 
         return {"posts": [post.json() for post in posts]}
 

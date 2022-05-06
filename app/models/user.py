@@ -1,5 +1,5 @@
 from app.db import db
-
+from sqlalchemy import or_
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
 import uuid
