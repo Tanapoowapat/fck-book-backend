@@ -15,7 +15,7 @@ class UserModel(db.Model):
     display_image = db.Column(db.String(128))
     create_time = db.Column(db.DateTime)
 
-    def __init__(self, username, password, display_name="", display_image=""):
+    def __init__(self, username, password, display_name, display_image):
         self.id = uuid.uuid4()
         self.username = username
         self.password = password
