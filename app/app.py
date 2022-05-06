@@ -10,6 +10,8 @@ from app.resources.chat import Chat, ChatList
 from app.resources.product import Product
 from app.config import postgresqlConfig
 from app.resources.cart import Cart
+from flask_cors import CORS
+
 
 app = Flask(__name__)
 
@@ -22,6 +24,8 @@ app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 jwt = JWTManager(app)
 api = Api(app)
+CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.before_first_request
