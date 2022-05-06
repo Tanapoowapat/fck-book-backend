@@ -59,7 +59,6 @@ class UserRegister(Resource):
         image.save("app/image/" + image_name)
         data["display_image"] = image_name
 
-        print(data["display_image"])
         if UserModel.find_by_username(data["username"]):
             return {"message": "UserModel has already been created, aborting."}, 400
         user = UserModel(**data)
