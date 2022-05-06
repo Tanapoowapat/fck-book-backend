@@ -6,15 +6,14 @@ import uuid
 
 
 class UserModel(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id = db.Column(UUID(as_uuid=True), primary_key=True)
     username = db.Column(db.String(128))
     password = db.Column(db.String(128))
     display_name = db.Column(db.String(128))
     display_image = db.Column(db.String(128))
-    create_time = db.Column(
-        db.DateTime)
+    create_time = db.Column(db.DateTime)
 
     def __init__(self, username, password, display_name="", display_image=""):
         self.id = uuid.uuid4()
@@ -22,7 +21,7 @@ class UserModel(db.Model):
         self.password = password
         self.display_name = display_name
         self.display_image = display_image
-        self.create_time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+        self.create_time = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
     def save_to_db(self):
         db.session.add(self)
@@ -36,6 +35,9 @@ class UserModel(db.Model):
         if password == self.password:
             return True
         return False
+
+    def json(self):
+        return {"id": str(self.id), "username": self.username, "display_name": self.display_name, "display_image": self.display_image}
 
     @classmethod
     def find_by_username(cls, username):
