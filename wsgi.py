@@ -9,7 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:admin@192.168.1.180:
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-
+#class User
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(UUID(as_uuid=True), primary_key=True)
