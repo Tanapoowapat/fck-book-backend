@@ -2,6 +2,7 @@ from app.db import db
 
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
+from app.models.user import UserModel
 import uuid
 
 
@@ -34,7 +35,13 @@ class CommentModel(db.Model):
         db.session.commit()
 
     def json(self):
-        return {"id": str(self.id), "owner_comment": str(self.owner_comment), "message": self.message, "like": self.like, "update_time": str(self.update_time)}
+        return {
+            "id": str(self.id),
+            "owner_comment": UserModel.find_by_id(str(self.owner_comment)).json(),
+            "message": self.message,
+            "like": self.like,
+            "update_time": str(self.update_time),
+        }
 
     @classmethod
     def find_by_post_id(cls, post_id):
