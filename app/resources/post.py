@@ -100,11 +100,6 @@ class PostList(Resource):
     @jwt_required()  # Requires dat token
     def get(self):
         posts = PostModel.query.all()
-
-        for post in posts:
-            user = UserModel.find_by_id(str(post.owner_post))
-            post.owner_post = user.json()
-
         return {"posts": [post.json() for post in posts]}
 
 
