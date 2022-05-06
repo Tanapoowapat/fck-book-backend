@@ -16,8 +16,11 @@ class User(Resource):
         self.logger = create_logger()
 
     parser = reqparse.RequestParser()
-    parser.add_argument("username", type=str, required=True, help="This field cannot be left blank")
-    parser.add_argument("password", type=str, required=True, help="This field cannot be left blank")
+
+    parser.add_argument("username", type=str, required=True,
+                        help="This field cannot be left blank")
+    parser.add_argument("password", type=str, required=True,
+                        help="This field cannot be left blank")
 
     def post(self):
         data = User.parser.parse_args()
@@ -27,7 +30,8 @@ class User(Resource):
         if not user or not user.check_password(password):
             return {"message": "Wrong username or password."}, 401
         access_token = create_access_token(
-            identity=json.dumps({"id": str(user.id), "username": user.username, "display_name": user.display_name, "display_image": user.display_image})
+            identity=json.dumps({"id": str(user.id), "username": user.username,
+                                "display_name": user.display_name, "display_image": user.display_image})
         )
         return jsonify(access_token=access_token)
 
@@ -43,8 +47,12 @@ class UserRegister(Resource):
 
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("username", type=str, required=True, help="This field cannot be left blank")
-        parser.add_argument("password", type=str, required=True, help="This field cannot be left blank")
+        parser.add_argument("display_name", type=str, required=True,
+                            help="This field cannot be left blank")
+        parser.add_argument("username", type=str, required=True,
+                            help="This field cannot be left blank")
+        parser.add_argument("password", type=str, required=True,
+                            help="This field cannot be left blank")
         data = parser.parse_args()
 
         if UserModel.find_by_username(data["username"]):

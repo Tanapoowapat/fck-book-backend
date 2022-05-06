@@ -1,6 +1,7 @@
-from email import message
+import json
 from flask_restful import Resource, reqparse
 from app.models.post import PostModel
+from app.models.user import UserModel
 from flask_jwt_extended import jwt_required
 from app.util.logz import create_logger
 
@@ -89,7 +90,15 @@ class PostList(Resource):
 
     @jwt_required()  # Requires dat token
     def get(self):
-        return {"posts": [post.json() for post in PostModel.query.all()]}
+        posts = PostModel.query.all()
+
+        for post in posts:
+            user = UserModel.find_by_id(str(post.owner_post))
+            post.owner_post = user.json()
+
+        print({"posts": [post.json() for post in posts]})
+
+        return {"posts": [post.json() for post in posts]}
 
 
 class LikePost(Resource):
