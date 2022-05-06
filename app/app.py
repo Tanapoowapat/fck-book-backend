@@ -8,6 +8,7 @@ from app.resources.post import Post, PostList, LikePost
 from app.resources.comment import Comment, LikeComment
 from app.resources.chat import Chat, ChatList
 from app.resources.product import Product
+from app.resources.image import Image
 from app.config import postgresqlConfig
 from app.resources.cart import Cart
 from flask_cors import CORS
@@ -15,8 +16,12 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
+UPLOAD_FOLDER = "./image"
+ALLOWED_EXTENSIONS = {"txt", "pdf", "png", "jpg", "jpeg", "gif"}
+
 app.config["SQLALCHEMY_DATABASE_URI"] = postgresqlConfig
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # Setup the Flask-JWT-Extended extension
 # Change this!
 app.config["JWT_SECRET_KEY"] = "192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcbf"
@@ -47,6 +52,7 @@ api.add_resource(Chat, "/chat")
 api.add_resource(ChatList, "/chat_list")
 api.add_resource(Cart, "/cart")
 api.add_resource(Product, "/product")
+api.add_resource(Image, "/image/<filename>")
 
 if __name__ == "__main__":
     # TODO: Add swagger integration
