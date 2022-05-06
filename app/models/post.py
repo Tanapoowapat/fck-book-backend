@@ -24,6 +24,7 @@ class PostModel(db.Model):
         self.message = message
         self.owner_post = owner_post
         self.like = like
+        self.comment_list = []
         self.create_time = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
     def save_to_db(self):
@@ -36,11 +37,19 @@ class PostModel(db.Model):
         db.session.commit()
 
     def get_comment(self):
-        comment = CommentModel.find_by_post_id(self.id)
-        return comment
+        return CommentModel.find_by_post_id(self.id)
 
     def json(self):
-        return {"id": str(self.id), "title": self.title, "message": self.message, "image": self.image, "like": self.like, "owner_post": self.owner_post, "update_time": str(self.update_time)}
+        return {
+            "id": str(self.id),
+            "title": self.title,
+            "message": self.message,
+            "image": self.image,
+            "like": self.like,
+            "owner_post": self.owner_post,
+            "comment_list": [comment.json() for comment in self.get_comment()],
+            "update_time": str(self.update_time),
+        }
 
     @classmethod
     def find_by_owner_post(cls, owner_post):
