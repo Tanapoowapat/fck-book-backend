@@ -36,8 +36,9 @@ class User(Resource):
 
     @jwt_required()  # Requires bearer token
     def get(self):
-        user = get_jwt_identity()
-        return json.loads(user)
+        identify = json.loads(get_jwt_identity())
+        user = UserModel.find_by_id(str(identify["id"]))
+        return user.json()
 
 
 class UserRegister(Resource):
