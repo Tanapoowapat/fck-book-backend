@@ -3,7 +3,7 @@ from uuid import uuid4
 from flask_restful import Resource, reqparse
 from app.models.post import PostModel
 from app.models.user import UserModel
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.util.logz import create_logger
 from sqlalchemy import or_
 import werkzeug
@@ -29,8 +29,6 @@ class Post(Resource):
         """create require title owner_post image"""
 
         parser = reqparse.RequestParser()
-        parser.add_argument("title", type=str, required=True, help="This field cannot be left blank")
-        parser.add_argument("owner_post", type=str, required=True, help="This field cannot be left blank")
         parser.add_argument(
             "image",
             type=werkzeug.datastructures.FileStorage,
@@ -39,14 +37,15 @@ class Post(Resource):
         parser.add_argument("message", type=str, required=True, help="This field cannot be left blank")
         data = parser.parse_args()
 
-        title = data["title"]
-        owner_post = data["owner_post"]
+        user = json.loads(get_jwt_identity())
+
+        owner_post = user["id"]
         message = data["message"]
         image = data["image"]
         image_name = str(uuid4()) + ".png"
         image.save("app/image/" + image_name)
 
-        post = PostModel(title, owner_post, message, image_name)
+        post = PostModel(owner_post, message, image_name)
         try:
             post.save_to_db()
         except:
