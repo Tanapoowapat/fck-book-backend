@@ -3,8 +3,7 @@
 # standard python imports
 
 from flask_restful import Resource, reqparse
-from flask import jsonify, send_file
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask import send_file
 from app.models.user import UserModel
 from app.util.encoder import AlchemyEncoder
 import json

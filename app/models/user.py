@@ -12,7 +12,7 @@ class UserModel(db.Model):
     username = db.Column(db.String(128))
     password = db.Column(db.String(128))
     display_name = db.Column(db.String(128))
-    display_image = db.Column(db.String(128))
+    display_image = db.Column(db.String)
     create_time = db.Column(db.DateTime)
 
     def __init__(self, username, password, display_name, display_image):
